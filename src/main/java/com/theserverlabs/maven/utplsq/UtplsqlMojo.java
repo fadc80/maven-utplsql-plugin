@@ -124,12 +124,27 @@ public class UtplsqlMojo extends AbstractMojo
      * @parameter expression=false
      */
     private Boolean writeFailuresToConsole;
+
+    /**
+     * Skips the execution of this plugin.
+     * 
+     * @parameter default-value=false
+     */
+    private boolean skip;
     
     /**
      * Do the main work of the plugin here.
      */
     public void execute() throws MojoExecutionException, MojoFailureException
     {
+
+	if (skip == true) {
+		getLog().info("--------------------------------");
+		getLog().info("Skipping UTPLSQL test execution!");
+		getLog().info("--------------------------------");
+		return;
+	}	
+
         Connection conn = null;
 
         final String TEST_PKG   = "utplsql:Testing package ";
